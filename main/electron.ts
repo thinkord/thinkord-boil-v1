@@ -1,9 +1,9 @@
 import { app, BrowserWindow } from 'electron';
 import isDev from 'electron-is-dev'
 import * as path from 'path';
-import { FileChannel } from '../ipcchannel/FileChannel'
-import { TestChannel } from '../ipcchannel/TestChannel'
-import { IIpcChannel } from "../ipcchannel/IIpcChannel";
+import { FileChannel } from '../ipc/FileChannel'
+import { TestChannel } from '../ipc/TestChannel'
+import { IIpcChannel } from "../ipc/IIpcChannel";
 
 class Main {
     private win: BrowserWindow
