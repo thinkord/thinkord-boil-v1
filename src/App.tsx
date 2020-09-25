@@ -5,14 +5,17 @@ import appRuntime from './appRuntime'
 function App() {
 
   useEffect(() => {
-    appRuntime.subscribe('world', (data) => {
+    appRuntime.subscribe('fuck', (data) => {
       console.log(data)
     })
   }, [])
   return (
     <div className="App">
-      <Home />
-      <button onClick={() => { appRuntime.send('hello', 'world') }}>hello</button>
+      <Home />save
+      <button onClick={() => { appRuntime.send('test', 'hello', 'world') }}>hello</button>
+      <button onClick={() => { appRuntime.send('fileprocess', 'save', 'save') }}>save</button>
+      <button onClick={() => { appRuntime.send('fileprocess', 'delete', 'delete') }}>delete</button>
+      <button onClick={() => { appRuntime.send('fileprocess', 'load', 'load') }}>load</button>
     </div>
   );
 }

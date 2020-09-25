@@ -86,6 +86,151 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./ipcchannel/FileChannel.ts":
+/*!***********************************!*\
+  !*** ./ipcchannel/FileChannel.ts ***!
+  \***********************************/
+/*! exports provided: FileChannel */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FileChannel", function() { return FileChannel; });
+/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! electron */ "electron");
+/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(electron__WEBPACK_IMPORTED_MODULE_0__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+var FileChannel = /*#__PURE__*/function () {
+  function FileChannel(channelName) {
+    var _this = this;
+
+    _classCallCheck(this, FileChannel);
+
+    this.channelName = channelName;
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on(this.channelName, function (event, command, args) {
+      switch (command) {
+        case 'save':
+        case 'delete':
+        case 'load':
+          _this[command](event, args);
+
+          break;
+
+        default:
+          console.log('Something went wrong');
+          break;
+      }
+    });
+  }
+
+  _createClass(FileChannel, [{
+    key: "save",
+    value: function save(event, args) {
+      console.log(args);
+      event.reply('fuck', 'u');
+    }
+  }, {
+    key: "load",
+    value: function load(event, args) {
+      console.log(args);
+    }
+  }, {
+    key: "delete",
+    value: function _delete(event, args) {
+      console.log(args);
+    }
+    /****************Test Interface function**************** */
+
+  }, {
+    key: "setName",
+    value: function setName(channelName) {
+      this.channelName = channelName;
+    }
+  }, {
+    key: "getName",
+    value: function getName() {
+      return this.channelName;
+    }
+    /****************Think what rules we need**************** */
+
+  }]);
+
+  return FileChannel;
+}();
+
+/***/ }),
+
+/***/ "./ipcchannel/TestChannel.ts":
+/*!***********************************!*\
+  !*** ./ipcchannel/TestChannel.ts ***!
+  \***********************************/
+/*! exports provided: TestChannel */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TestChannel", function() { return TestChannel; });
+/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! electron */ "electron");
+/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(electron__WEBPACK_IMPORTED_MODULE_0__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+var TestChannel = /*#__PURE__*/function () {
+  function TestChannel(channelName) {
+    var _this = this;
+
+    _classCallCheck(this, TestChannel);
+
+    this.channelName = channelName;
+    electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on(this.channelName, function (event, command, args) {
+      switch (command) {
+        case 'hello':
+          _this[command](args);
+
+          break;
+
+        default:
+          console.log('Something went wrong');
+          break;
+      }
+    });
+  }
+  /****************Test Interface function**************** */
+
+
+  _createClass(TestChannel, [{
+    key: "setName",
+    value: function setName(channelName) {
+      this.channelName = channelName;
+    }
+  }, {
+    key: "getName",
+    value: function getName() {
+      return this.channelName;
+    }
+    /****************Think what rules we need**************** */
+
+  }, {
+    key: "hello",
+    value: function hello(args) {
+      console.log(args);
+    }
+  }]);
+
+  return TestChannel;
+}();
+
+/***/ }),
+
 /***/ "./main/electron.ts":
 /*!**************************!*\
   !*** ./main/electron.ts ***!
@@ -101,37 +246,98 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var electron_is_dev__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(electron_is_dev__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! path */ "path");
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _service_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../service/index */ "./service/index.ts");
+/* harmony import */ var _ipcchannel_FileChannel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ipcchannel/FileChannel */ "./ipcchannel/FileChannel.ts");
+/* harmony import */ var _ipcchannel_TestChannel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ipcchannel/TestChannel */ "./ipcchannel/TestChannel.ts");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 
 
 
-var win;
 
-function createWindow() {
-  // Create the browser window.
-  win = new electron__WEBPACK_IMPORTED_MODULE_0__["BrowserWindow"]({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: true,
-      // enableRemoteModule: true,
-      contextIsolation: true,
-      preload: path__WEBPACK_IMPORTED_MODULE_2__["resolve"](__dirname, 'preload.js')
+
+
+var Main = /*#__PURE__*/function () {
+  function Main() {
+    _classCallCheck(this, Main);
+  }
+
+  _createClass(Main, [{
+    key: "init",
+    value: function init(channel) {
+      electron__WEBPACK_IMPORTED_MODULE_0__["app"].on('ready', this.createWindow);
+      electron__WEBPACK_IMPORTED_MODULE_0__["app"].on('window-all-closed', this.onWindowAllClosed);
+      electron__WEBPACK_IMPORTED_MODULE_0__["app"].on('activate', this.onActivate);
     }
-  });
-  Object(_service_index__WEBPACK_IMPORTED_MODULE_3__["register"])(); // and load the index.html of the app.
+  }, {
+    key: "onWindowAllClosed",
+    value: function onWindowAllClosed() {
+      if (process.platform !== 'darwin') {
+        electron__WEBPACK_IMPORTED_MODULE_0__["app"].quit();
+      }
+    }
+  }, {
+    key: "onActivate",
+    value: function onActivate() {
+      if (!this.win) {
+        this.createWindow();
+      }
+    }
+  }, {
+    key: "createWindow",
+    value: function createWindow() {
+      var _this = this;
 
-  win.loadURL(electron_is_dev__WEBPACK_IMPORTED_MODULE_1___default.a ? "http://localhost:3000" : "file://".concat(path__WEBPACK_IMPORTED_MODULE_2__["join"](__dirname, '../build/index.html')));
-  win.once('ready-to-show', function () {
-    win.show();
-  });
-  win.on('closed', function () {
-    win = null;
-  });
-}
+      this.win = new electron__WEBPACK_IMPORTED_MODULE_0__["BrowserWindow"]({
+        width: 800,
+        height: 600,
+        webPreferences: {
+          nodeIntegration: true,
+          // enableRemoteModule: true,
+          contextIsolation: true,
+          preload: path__WEBPACK_IMPORTED_MODULE_2__["resolve"](__dirname, 'preload.js')
+        }
+      });
+      this.win.loadURL(electron_is_dev__WEBPACK_IMPORTED_MODULE_1___default.a ? "http://localhost:3000" : "file://".concat(path__WEBPACK_IMPORTED_MODULE_2__["join"](__dirname, '../build/index.html')));
+      this.win.once('ready-to-show', function () {
+        _this.win.show();
+      });
+      this.win.on('closed', function () {
+        _this.win = null;
+      });
+    }
+  }]);
 
-electron__WEBPACK_IMPORTED_MODULE_0__["app"].on('ready', createWindow);
+  return Main;
+}();
+
+new Main().init([new _ipcchannel_TestChannel__WEBPACK_IMPORTED_MODULE_4__["TestChannel"]('test'), new _ipcchannel_FileChannel__WEBPACK_IMPORTED_MODULE_3__["FileChannel"]('fileprocess')]); // let win: BrowserWindow | null
+// function createWindow() {
+//     // Create the browser window.
+//     win = new BrowserWindow({
+//         width: 800,
+//         height: 600,
+//         webPreferences: {
+//             nodeIntegration: true,
+//             // enableRemoteModule: true,
+//             contextIsolation: true,
+//             preload: path.resolve(__dirname, 'preload.js')
+//         }
+//     });
+//     register()
+//     // and load the index.html of the app.
+//     win.loadURL(isDev ? "http://localhost:3000" : `file://${path.join(__dirname, '../build/index.html')}`)
+//     win.once('ready-to-show', () => {
+//         win.show()
+//     })
+//     win.on('closed', () => {
+//         win = null
+//     })
+// }
+// app.on('ready', createWindow);
 
 /***/ }),
 
@@ -157,28 +363,6 @@ const getFromEnv = parseInt(process.env.ELECTRON_IS_DEV, 10) === 1;
 
 module.exports = isEnvSet ? getFromEnv : !app.isPackaged;
 
-
-/***/ }),
-
-/***/ "./service/index.ts":
-/*!**************************!*\
-  !*** ./service/index.ts ***!
-  \**************************/
-/*! exports provided: register */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "register", function() { return register; });
-/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! electron */ "electron");
-/* harmony import */ var electron__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(electron__WEBPACK_IMPORTED_MODULE_0__);
-
-function register() {
-  electron__WEBPACK_IMPORTED_MODULE_0__["ipcMain"].on('hello', function (event, data) {
-    console.log(data);
-    event.reply('world', 'hello');
-  });
-}
 
 /***/ }),
 

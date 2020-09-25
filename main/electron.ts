@@ -1,32 +1,54 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import isDev from 'electron-is-dev'
 import * as path from 'path';
-import { register } from '../service/index'
+import { FileChannel } from '../ipcchannel/FileChannel'
+import { TestChannel } from '../ipcchannel/TestChannel'
+import { IIpcChannel } from "../ipcchannel/IIpcChannel";
 
+class Main {
+    private win: BrowserWindow
 
-let win: BrowserWindow | null
-function createWindow() {
-    // Create the browser window.
-    win = new BrowserWindow({
-        width: 800,
-        height: 600,
-        webPreferences: {
-            nodeIntegration: true,
-            // enableRemoteModule: true,
-            contextIsolation: true,
-            preload: path.resolve(__dirname, 'preload.js')
+    public init(channel: IIpcChannel[]) {
+        app.on('ready', this.createWindow)
+        app.on('window-all-closed', this.onWindowAllClosed)
+        app.on('activate', this.onActivate)
+    }
+    private onWindowAllClosed() {
+        if (process.platform !== 'darwin') {
+            app.quit();
         }
-    });
-    register()
-    // and load the index.html of the app.
-    win.loadURL(isDev ? "http://localhost:3000" : `file://${path.join(__dirname, '../build/index.html')}`)
-    win.once('ready-to-show', () => {
-        win.show()
-    })
-    win.on('closed', () => {
-        win = null
-    })
+    }
+    private onActivate() {
+        if (!this.win) {
+            this.createWindow()
+        }
+    }
+
+    private createWindow() {
+        this.win = new BrowserWindow({
+            width: 800,
+            height: 600,
+            webPreferences: {
+                nodeIntegration: true,
+                // enableRemoteModule: true,
+                contextIsolation: true,
+                preload: path.resolve(__dirname, 'preload.js')
+            }
+        });
+
+        this.win.loadURL(isDev ? "http://localhost:3000" : `file://${path.join(__dirname, '../build/index.html')}`)
+        this.win.once('ready-to-show', () => {
+            this.win.show()
+        })
+        this.win.on('closed', () => {
+            this.win = null
+        })
+    }
 }
 
-app.on('ready', createWindow);
+(new Main()).init([
+    new TestChannel('test'),
+    new FileChannel('fileprocess')
+])
+
 
