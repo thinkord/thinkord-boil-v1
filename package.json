@@ -27,7 +27,7 @@
     "electron-build": "webpack --config ./webpack.config.js",
     "bundle": "npm run electron-build && npm run react-build",
     "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && npm run electron-build && electron .\"",
-    "electron-pack2": "electron-builder --config electron-builder.json"
+    "electron-pack": "electron-builder --config electron-builder.json"
   },
   "eslintConfig": {
     "extends": "react-app"
